@@ -1,6 +1,6 @@
 {
   "name": "wordpress-theme-builder",
-  "version": "4.2.1",
+  "version": "4.2.2",
   "keywords": [
     "wordpress",
     "theme",
@@ -98,7 +98,7 @@
     "react": "^17.0.1",
     "require-dir": "^1.2.0",
     "sass": "^1.29.0",
-    "snyk": "^1.427.2",
+    "snyk": "^1.428.0",
     "tinyify": "^3.0.0",
     "vinyl-buffer": "^1.0.1",
     "vinyl-source-stream": "^2.0.0",
