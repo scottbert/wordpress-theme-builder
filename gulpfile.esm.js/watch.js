@@ -1,34 +1,34 @@
 import { copyConfig, copyCssLR, copyViews, copyStaticFiles } from './copy';
 import { parallel, watch } from 'gulp';
 import fancyLog from 'fancy-log';
-import gulpLivereload from 'gulp-livereload';
+import { listen, reload } from 'gulp-livereload';
 import { eslint } from './eslint';
 import { sass } from './sass';
 import { CONSTS } from './CONSTS';
 
 const {
-    LIVERELOAD_PORT,
-    TEMPLATES_DEST,
-    IMG_SRC,
-    FONT_SRC,
     AUDIO_SRC,
-    VIDEO_SRC,
-    SASS_SRC,
-    WP_CSS_SRC,
-    WPCONFIG_SRC,
-    TEMPLATES_SRC,
+    FONT_SRC,
+    GULP_TASKS,
     GULPFILE,
+    IMG_SRC,
     JS_SRC,
-    GULP_TASKS
+    LIVERELOAD_PORT,
+    SASS_SRC,
+    TEMPLATES_DEST,
+    TEMPLATES_SRC,
+    VIDEO_SRC,
+    WP_CSS_SRC,
+    WPCONFIG_SRC
 } = CONSTS;
 
 function watchers(cb) {
-    gulpLivereload.listen({
+    listen({
         port: LIVERELOAD_PORT
     });
     const watchCopiedTemplates = watch(
         `${TEMPLATES_DEST}/**/*.php`,
-        parallel(gulpLivereload.reload)
+        parallel(reload)
     );
     const watchPublic = watch(
         [

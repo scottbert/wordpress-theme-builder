@@ -18,7 +18,7 @@ OSX: `brew install mysql`
 
 To run the demo, additionally check out [wordpress-theme-builder-src](https://github.com/scottbert/wordpress-theme-builder-src) then copy into the root of this folder as "src" (this exists as a submodule now).
 
-Do `npm install`
+For pre NPM 7 do `npm install`, post NPM 7 do `npm install --legacy-peer-deps`
 
 then ```npm run get-wordpress``` to download and uncompress the latest wordpress into `.run`
 

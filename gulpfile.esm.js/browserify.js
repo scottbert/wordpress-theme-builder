@@ -1,11 +1,11 @@
+import { dest } from 'gulp';
 import browserify from 'browserify';
-import merge2 from 'merge2';
+import fancyLog from 'fancy-log';
 import glob from 'glob';
-import gulp from 'gulp';
 import gulpIf from 'gulp-if';
 import gulpLivereload from 'gulp-livereload';
 import gulpReplace from 'gulp-replace';
-import fancyLog from 'fancy-log';
+import merge2 from 'merge2';
 import vinylBuffer from 'vinyl-buffer';
 import vinylSourceStream from 'vinyl-source-stream';
 import watchify from 'watchify';
@@ -84,7 +84,7 @@ function addToBrowserify(entry) {
             .pipe(gulpReplace('$$smalltablet$$', CONSTS.BREAKPOINTS.SMALL_TABLET))
             .pipe(gulpReplace('$$tablet$$', CONSTS.BREAKPOINTS.TABLET))
             .pipe(gulpReplace('$$smalldesktop$$', CONSTS.BREAKPOINTS.SMALL_DESKTOP))
-            .pipe(gulp.dest(CONSTS.JS_DEST))
+            .pipe(dest(CONSTS.JS_DEST))
             .pipe(gulpIf(doLR(), gulpLivereload({
                 port: CONSTS.LIVERELOAD_PORT
             })));
