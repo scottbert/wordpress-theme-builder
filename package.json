@@ -1,6 +1,6 @@
 {
   "name": "wordpress-theme-builder",
-  "version": "4.2.4",
+  "version": "4.2.5",
   "keywords": [
     "wordpress",
     "theme",
@@ -39,7 +39,7 @@
   },
   "private": false,
   "dependencies": {
-    "@babel/core": "^7.12.7",
+    "@babel/core": "^7.12.8",
     "@babel/preset-env": "^7.12.7",
     "@babel/preset-react": "^7.12.7",
     "autoprefixer": "^10.0.2",
@@ -88,7 +88,7 @@
     "merge2": "^1.4.1",
     "node-normalize-scss": "^8.1.2",
     "node-sass": "^5.0.0",
-    "postcss": "^8.1.9",
+    "postcss": "^8.1.10",
     "postcss-assets": "^5.0.0",
     "postcss-combine-media-query": "^1.0.1",
     "postcss-normalize": "^9.0.0",
@@ -97,7 +97,7 @@
     "react": "^17.0.1",
     "require-dir": "^1.2.0",
     "sass": "^1.29.0",
-    "snyk": "^1.430.0",
+    "snyk": "^1.430.2",
     "tinyify": "^3.0.0",
     "vinyl-buffer": "^1.0.1",
     "vinyl-source-stream": "^2.0.0",
