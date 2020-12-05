@@ -31,6 +31,7 @@ let CONSTS = {
         TABLET: 979,
         SMALL_DESKTOP: 1440
     },
+    BREAKPOINT_DEVELOPMENT: 'mobile-first',
     BUILD_DEST: 'build/',
     BUILD_DIST: 'dist/',
     CONTENT,

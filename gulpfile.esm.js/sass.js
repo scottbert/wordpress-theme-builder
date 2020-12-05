@@ -1,25 +1,28 @@
 import { src, dest } from 'gulp';
+import cssnano from 'cssnano';
+import Fiber from 'fibers';
 import gulpChanged from 'gulp-changed';
 import gulpIf from 'gulp-if';
 import gulpLivereload from 'gulp-livereload';
-import { onError } from 'gulp-notify';
 import gulpPlumber from 'gulp-plumber';
 import gulpPostcss from 'gulp-postcss';
 import gulpRename from 'gulp-rename';
-import gulpSassVariables from 'gulp-sass-variables';
 import gulpSass from 'gulp-sass';
+import gulpSassVariables from 'gulp-sass-variables';
 import postcssAssets from 'postcss-assets';
 import postcssCombineMediaQuery from 'postcss-combine-media-query';
-import cssnano from 'cssnano';
 import postcssNormalize from 'postcss-normalize';
 import postcssPresetEnv from 'postcss-preset-env';
-import { CONSTS } from './CONSTS';
+import postcssSortMediaQueries from 'postcss-sort-media-queries';
 import sass from 'sass';
-import Fiber from 'fibers';
+
+import { CONSTS } from './CONSTS';
+import { notify } from './notify';
 
 const {
     NODE_ENV,
     BREAKPOINTS,
+    BREAKPOINT_DEVELOPMENT,
     NAME,
     VERSION,
     SASS_SRC,
@@ -60,7 +63,12 @@ function rename(path) {
 function compileSass() {
     const processors = [
         postcssCombineMediaQuery,
-        cssnano,
+        postcssSortMediaQueries({
+            sort: BREAKPOINT_DEVELOPMENT // default
+        }),
+        cssnano({
+            preset: 'advanced'
+        }),
         postcssAssets,
         postcssNormalize,
         postcssPresetEnv
@@ -70,7 +78,7 @@ function compileSass() {
         .pipe(gulpChanged(CSS_DEST))
         .pipe(
             gulpPlumber({
-                errorHandler: onError(error => `Styles Error: ${error.message}`)
+                errorHandler: notify('Styles Error')
             })
         )
         .pipe(gulpSassVariables(sassVariables))

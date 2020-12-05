@@ -10,6 +10,7 @@ import vinylBuffer from 'vinyl-buffer';
 import vinylSourceStream from 'vinyl-source-stream';
 import watchify from 'watchify';
 
+import { notify } from './notify';
 import { CONSTS } from './CONSTS';
 
 const isDev = CONSTS.NODE_ENV !== 'production';
@@ -70,8 +71,8 @@ function addToBrowserify(entry) {
 
     function bundle() {
         return b.bundle()
-            .on('error', function (err) {
-                console.error(err.stack);
+            .on('error', err => {
+                notify('Browserify error')(err);
                 this.emit('end');
             })
             .pipe(vinylSourceStream(name + CONSTS.JS_OUTPUT))
