@@ -32,11 +32,11 @@ let CONSTS = {
         SMALL_DESKTOP: 1440
     },
     BREAKPOINT_DEVELOPMENT: 'mobile-first',
-    CSS_NANO_PRESET: 'advanced',
     BUILD_DEST: 'build/',
     BUILD_DIST: 'dist/',
     CONTENT,
     CSS_DEST: `${THEME}css/`,
+    CSS_NANO_PRESET: 'advanced',
     CSS_SRC: 'src/css/',
     FAVICON: 'src/images/favicon.ico',
     FONT_SRC: 'src/fonts',
@@ -68,6 +68,9 @@ let CONSTS = {
     WPCONFIG_SRC: 'src/wp-config.php'
 };
 
-CONSTS = Object.assign(CONSTS, OPTIONS || {});
+CONSTS = {
+    ...CONSTS,
+    ...OPTIONS
+};
 
 export { CONSTS };

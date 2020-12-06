@@ -11,6 +11,7 @@ import gulpSass from 'gulp-sass';
 import gulpSassVariables from 'gulp-sass-variables';
 import postcssAssets from 'postcss-assets';
 import postcssCombineMediaQuery from 'postcss-combine-media-query';
+import postcssImport from 'postcss-import';
 import postcssNormalize from 'postcss-normalize';
 import postcssPresetEnv from 'postcss-preset-env';
 import postcssSortMediaQueries from 'postcss-sort-media-queries';
@@ -70,6 +71,7 @@ const processors = [
         preset: CSS_NANO_PRESET
     }),
     postcssAssets,
+    postcssImport,
     postcssNormalize,
     postcssPresetEnv
 ];

@@ -1,5 +1,6 @@
 import { dest } from 'gulp';
 import browserify from 'browserify';
+import commonShakeify from 'common-shakeify';
 import fancyLog from 'fancy-log';
 import glob from 'glob';
 import gulpIf from 'gulp-if';
@@ -13,9 +14,21 @@ import watchify from 'watchify';
 import { notify } from './notify';
 import { CONSTS } from './CONSTS';
 
-const isDev = CONSTS.NODE_ENV !== 'production';
+const {
+    NODE_ENV,
+    JS_SRC,
+    NAME,
+    VERSION,
+    JS_OUTPUT,
+    API,
+    BREAKPOINTS,
+    JS_DEST,
+    LIVERELOAD_PORT
+} = CONSTS;
 
-const entries = glob.sync(`${CONSTS.JS_SRC}*.js`);
+const isDev = NODE_ENV !== 'production';
+
+const entries = glob.sync(`${JS_SRC}*.js`);
 
 function addToBrowserify(entry) {
     const options = {
@@ -23,7 +36,7 @@ function addToBrowserify(entry) {
         cache: {},
         packageCache: {},
         paths: [
-            `./${CONSTS.JS_SRC}modules`
+            `./${JS_SRC}modules`
         ]
     };
 
@@ -31,10 +44,10 @@ function addToBrowserify(entry) {
         options.debug = true;
     }
 
-    const name = entry.replace('$name', CONSTS.NAME).replace('$version', CONSTS.VERSION)
+    const name = entry.replace('$name', NAME).replace('$version', VERSION)
         .replace(/.*\/([\w$\-.]+).js/, '$1');
 
-    const b = browserify(options);
+    const b = browserify(options).plugin(commonShakeify, {});
 
     if (isDev) {
         b.transform('babelify', {
@@ -71,28 +84,28 @@ function addToBrowserify(entry) {
 
     function bundle() {
         return b.bundle()
-            .on('error', err => {
-                notify('Browserify error')(err);
-                this.emit('end');
-            })
-            .pipe(vinylSourceStream(name + CONSTS.JS_OUTPUT))
+            .pipe(vinylSourceStream(name + JS_OUTPUT))
             .pipe(vinylBuffer())
-            .pipe(gulpReplace('$$API$$', CONSTS.API))
-            .pipe(gulpReplace('$$name$$', CONSTS.NAME))
-            .pipe(gulpReplace('$$version$$', CONSTS.VERSION))
-            .pipe(gulpReplace('$$oldMobile$$', CONSTS.BREAKPOINTS.OLD_MOBILE))
-            .pipe(gulpReplace('$$mobile$$', CONSTS.BREAKPOINTS.MOBILE))
-            .pipe(gulpReplace('$$smalltablet$$', CONSTS.BREAKPOINTS.SMALL_TABLET))
-            .pipe(gulpReplace('$$tablet$$', CONSTS.BREAKPOINTS.TABLET))
-            .pipe(gulpReplace('$$smalldesktop$$', CONSTS.BREAKPOINTS.SMALL_DESKTOP))
-            .pipe(dest(CONSTS.JS_DEST))
+            .pipe(gulpReplace('$$API$$', API))
+            .pipe(gulpReplace('$$name$$', NAME))
+            .pipe(gulpReplace('$$version$$', VERSION))
+            .pipe(gulpReplace('$$oldMobile$$', BREAKPOINTS.OLD_MOBILE))
+            .pipe(gulpReplace('$$mobile$$', BREAKPOINTS.MOBILE))
+            .pipe(gulpReplace('$$smalltablet$$', BREAKPOINTS.SMALL_TABLET))
+            .pipe(gulpReplace('$$tablet$$', BREAKPOINTS.TABLET))
+            .pipe(gulpReplace('$$smalldesktop$$', BREAKPOINTS.SMALL_DESKTOP))
+            .pipe(dest(JS_DEST))
             .pipe(gulpIf(doLR(), gulpLivereload({
-                port: CONSTS.LIVERELOAD_PORT
+                port: LIVERELOAD_PORT
             })));
     }
 
     b.on('update', bundle);
     b.on('log', fancyLog);
+    b.on('error', err => {
+        notify('Browserify error')(err);
+        this.emit('end');
+    });
 
     return bundle();
 }
