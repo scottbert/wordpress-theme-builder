@@ -74,26 +74,20 @@ const processors = [
     postcssPresetEnv
 ];
 
-const GSRC = src(`${SASS_SRC}/**/*.scss`, gulpOptions);
-const GDEST = dest(CSS_DEST, gulpOptions);
-const GSV = gulpSassVariables(sassVariables);
-const GPCSS = gulpPostcss(processors);
-const GR = gulpRename(rename);
-const GS = gulpSass(sassOptions).on('error', gulpSass.logError);
-const GP = gulpPlumber({ errorHandler: notify('Styles Error') });
-const GC = gulpChanged(CSS_DEST);
-const GI = gulpIf(isDev, gulpLivereload({ port: LIVERELOAD_PORT }));
-
 function compileSass() {
-    return GSRC
-        .pipe(GC)
-        .pipe(GP)
-        .pipe(GSV)
-        .pipe(GS)
-        .pipe(GPCSS)
-        .pipe(GR)
-        .pipe(GDEST)
-        .pipe(GI);
+    return src(`${SASS_SRC}/**/*.scss`, gulpOptions)
+        .pipe(gulpChanged(CSS_DEST))
+        .pipe(
+            gulpPlumber({
+                errorHandler: notify('Styles Error')
+            })
+        )
+        .pipe(gulpSassVariables(sassVariables))
+        .pipe(gulpSass(sassOptions).on('error', gulpSass.logError))
+        .pipe(gulpPostcss(processors))
+        .pipe(gulpRename(rename))
+        .pipe(dest(CSS_DEST, gulpOptions))
+        .pipe(gulpIf(isDev, gulpLivereload({ port: LIVERELOAD_PORT })));
 }
 
 export { compileSass as sass };

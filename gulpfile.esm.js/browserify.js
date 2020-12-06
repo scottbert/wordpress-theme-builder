@@ -69,17 +69,14 @@ function addToBrowserify(entry) {
         return isDev;
     }
 
-    const VSS = vinylSourceStream(name + CONSTS.JS_OUTPUT);
-    const VB = vinylBuffer();
-
     function bundle() {
         return b.bundle()
             .on('error', err => {
                 notify('Browserify error')(err);
                 this.emit('end');
             })
-            .pipe(VSS)
-            .pipe(VB)
+            .pipe(vinylSourceStream(name + CONSTS.JS_OUTPUT))
+            .pipe(vinylBuffer())
             .pipe(gulpReplace('$$API$$', CONSTS.API))
             .pipe(gulpReplace('$$name$$', CONSTS.NAME))
             .pipe(gulpReplace('$$version$$', CONSTS.VERSION))
