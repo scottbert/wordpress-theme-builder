@@ -32,6 +32,7 @@ let CONSTS = {
         SMALL_DESKTOP: 1440
     },
     BREAKPOINT_DEVELOPMENT: 'mobile-first',
+    CSS_NANO_PRESET: 'advanced',
     BUILD_DEST: 'build/',
     BUILD_DIST: 'dist/',
     CONTENT,

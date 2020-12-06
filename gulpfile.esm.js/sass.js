@@ -23,6 +23,7 @@ const {
     NODE_ENV,
     BREAKPOINTS,
     BREAKPOINT_DEVELOPMENT,
+    CSS_NANO_PRESET,
     NAME,
     VERSION,
     SASS_SRC,
@@ -67,7 +68,7 @@ function compileSass() {
             sort: BREAKPOINT_DEVELOPMENT // default
         }),
         cssnano({
-            preset: 'advanced'
+            preset: CSS_NANO_PRESET
         }),
         postcssAssets,
         postcssNormalize,
