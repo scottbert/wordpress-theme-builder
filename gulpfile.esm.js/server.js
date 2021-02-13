@@ -1,13 +1,14 @@
+import { createProxyMiddleware } from 'http-proxy-middleware';
+import { series } from 'gulp';
 import connectCORS from 'connect-cors';
 import connectLivereload from 'connect-livereload';
 import fancyLog from 'fancy-log';
-import { series } from 'gulp';
 import gulpConnect from 'gulp-connect';
 import gulpConnectPHP from 'gulp-connect-php';
-import { createProxyMiddleware } from 'http-proxy-middleware';
 import httpRewriteMiddleware from 'http-rewrite-middleware';
 import serveStatic from 'serve-static';
 import url from 'url';
+
 import { CONSTS } from './CONSTS';
 
 const { APPSERVER_PORT, RUN_DEST, GULP_PORT, LIVERELOAD_PORT } = CONSTS;
