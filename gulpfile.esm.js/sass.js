@@ -1,6 +1,5 @@
 import { src, dest } from 'gulp';
 import cssnano from 'cssnano';
-import Fiber from 'fibers';
 import gulpChanged from 'gulp-changed';
 import gulpIf from 'gulp-if';
 import gulpLivereload from 'gulp-livereload';
@@ -35,7 +34,6 @@ const isDev = NODE_ENV !== 'production';
 
 const sassOptions = {
     errLogToConsole: true,
-    fiber: Fiber,
     includePaths: []
 };
 
