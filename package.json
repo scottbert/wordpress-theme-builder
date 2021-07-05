@@ -131,6 +131,6 @@
     "@types/sass": "^1.16.0",
     "@types/vinyl-buffer": "^1.0.0",
     "@types/vinyl-source-stream": "^0.0.30",
-    "@types/watchify": "^3.11.0"
+    "@types/watchify": "^3.11.1"
   }
 }
