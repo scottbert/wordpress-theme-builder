@@ -94,7 +94,7 @@
     "merge2": "^1.4.1",
     "node-normalize-scss": "^8.1.2",
     "node-notifier": "^10.0.0",
-    "postcss": "^8.3.5",
+    "postcss": "^8.3.6",
     "postcss-assets": "^6.0.0",
     "postcss-combine-media-query": "^1.0.1",
     "postcss-import": "^14.0.2",
