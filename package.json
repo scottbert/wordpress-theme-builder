@@ -1,7 +1,7 @@
 {
   "name": "wp-theme-builder",
   "description": "Build the best WordPress themes with WP Theme Builder. Use a gulp enabled fast development toolchain to build wordpress themes",
-  "version": "4.9.0",
+  "version": "4.9.1",
   "keywords": [
     "wordpress",
     "theme",
@@ -56,7 +56,8 @@
     "cssnano-preset-advanced": "^5.1.5",
     "cssnano-preset-lite": "^2.0.1",
     "del": "^6.0.0",
-    "eslint": "^8.1.0",
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.3.0",
     "eslint-import-resolver-node": "^0.3.6",
     "eslint-plugin-import": "^2.25.2",
     "eslint-plugin-jsdoc": "^37.0.3",
