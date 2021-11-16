@@ -1,7 +1,7 @@
 {
   "name": "wp-theme-builder",
   "description": "Build the best WordPress themes with WP Theme Builder. Use a gulp enabled fast development toolchain to build wordpress themes",
-  "version": "4.9.2",
+  "version": "4.9.3",
   "keywords": [
     "wordpress",
     "theme",
@@ -106,7 +106,7 @@
     "pre-commit-package-version": "^1.0.7",
     "react": "^17.0.2",
     "require-dir": "^1.2.0",
-    "snyk": "^1.760.0",
+    "snyk": "^1.763.0",
     "tinyify": "^3.0.0",
     "vinyl-buffer": "^1.0.1",
     "vinyl-source-stream": "^2.0.0",
