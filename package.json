@@ -1,7 +1,7 @@
 {
   "name": "wp-theme-builder",
   "description": "Build the best WordPress themes with WP Theme Builder. Use a gulp enabled fast development toolchain to build wordpress themes",
-  "version": "4.12.3",
+  "version": "4.12.4",
   "keywords": [
     "wordpress",
     "theme",
@@ -39,6 +39,7 @@
     "deploy": "NODE_ENV=production gulp deploy",
     "develop": "NODE_ENV=development gulp",
     "dev": "NODE_ENV=development gulp",
+    "remotedev": "LIVERELOAD_PORT=35729 NODE_ENV=development gulp",
     "get-wordpress": "gulp getwp"
   },
   "private": false,
@@ -62,7 +63,7 @@
     "eslint-plugin-import": "^2.25.4",
     "eslint-plugin-jsdoc": "^37.9.4",
     "eslint-plugin-prettier": "^4.0.0",
-    "eslint-plugin-react": "^7.29.1",
+    "eslint-plugin-react": "^7.29.2",
     "eslint-plugin-react-hooks": "^4.3.0",
     "esm": "^3.2.25",
     "fibers": "^5.0.1",
