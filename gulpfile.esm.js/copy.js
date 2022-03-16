@@ -18,6 +18,7 @@ const {
     FONT_SRC,
     FULL_NAME,
     IMG_SRC,
+    JSON_SRC,
     LANGUAGES_SRC,
     LIVERELOAD_PORT,
     NAME,
@@ -38,7 +39,8 @@ const STATIC_SRC = [
     `${AUDIO_SRC}/**`,
     `${FONT_SRC}/**`,
     `${LANGUAGES_SRC}/**`,
-    `${VIDEO_SRC}/**`
+    `${VIDEO_SRC}/**`,
+    `${JSON_SRC}/**`
 ];
 
 const TEMPLATES = [`${TEMPLATES_SRC}/**`];

@@ -48,6 +48,7 @@ let CONSTS = {
     JS_DEST: `${THEME}js/`,
     JS_OUTPUT: '.min.js',
     JS_SRC: 'src/js/',
+    JSON_SRC: 'src/json/',
     LANGUAGES_SRC: 'src/languages',
     LIVERELOAD_PORT: process.env.LIVERELOAD_PORT,
     NAME: OPTIONS.NAME || name,
