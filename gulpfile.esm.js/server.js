@@ -82,4 +82,4 @@ function makeServer(cb) {
 
 const server = series(runPHP, makeServer);
 
-export { server };
+export { server, runPHP, makeServer };

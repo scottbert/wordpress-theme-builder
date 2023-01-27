@@ -3,7 +3,7 @@ import { series, parallel } from 'gulp';
 import { copy, copyDeploy, copyViews as copyviews } from './copy';
 import { brotli } from './brotli';
 import { browserify } from './browserify';
-import { server } from './server';
+import { server, runPHP } from './server';
 import { check } from './check';
 import { clean } from './clean';
 import { eslint } from './eslint';
@@ -28,5 +28,6 @@ export {
     eslint,
     getwp,
     sass,
-    server
+    server,
+    runPHP
 };
