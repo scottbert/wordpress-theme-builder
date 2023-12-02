@@ -12,7 +12,7 @@
     "extends": "eslint:recommended",
     "parserOptions": {
         "sourceType": "module",
-        "ecmaVersion": "2020"
+        "ecmaVersion": "latest"
     },
     "rules": {
         "array-bracket-spacing": 1,
@@ -75,7 +75,7 @@
             {
                 "enforceConst": true,
                 "ignoreArrayIndexes": true,
-                "ignore": [-1, .1, .2, .3, .4, .5, .6, .7, .8, .9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 50, 100, 255, 256, 500, 512, 1000]
+                "ignore": [-1, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 50, 100, 255, 256, 500, 512, 1000]
             }
         ],
         "no-multi-spaces": 2,

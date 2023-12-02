@@ -80,6 +80,58 @@ function makeServer(cb) {
     fancyLog(`server http://127.0.0.1:${gulpPort}`);
 }
 
+function makeRemoteServer(cb) {
+    gulpConnect.server({
+      port: GULP_PORT,
+      host: '0.0.0.0',
+      root: STATIC_DIR,
+      debug: false,
+      middleware: () => {
+        return [
+          connectLivereload({
+            port: LIVERELOAD_PORT
+          }),
+          connectCORS(),
+          rewriteModule.getMiddleware(urlrewrites),
+          createProxyMiddleware(
+            ['/**', '!/css/**', '!/js/**', `!${APP_REMOTE_THEME_LOCATION}**`],
+            {
+              target: APP_REMOTE_SERVER,
+              auth: 'lkq:lkqeurope2022',
+              secure: false,
+              //selfHandleResponse: true,
+              xfwd: true,
+              toProxy: true,
+              preserveHeaderKeyCase: true,
+              changeOrigin: true,
+              selfHandleResponse: true,
+              onProxyRes: responseInterceptor(
+                async (responseBuffer, proxyRes, req) => {
+                  const text =
+                    req.headers &&
+                    req.headers.accept &&
+                    req.headers.accept.includes('text');
+                  const response = text
+                    ? responseBuffer.toString('utf8')
+                    : responseBuffer; // convert buffer to string
+
+                  return response; // manipulate response and return the result
+                }
+              )
+              // onProxyReq: responseInterceptor(async proxyReq => {
+              //   proxyReq.headers.host = 'lkqcorporatestg.prod.acquia-sites.com';
+              // })
+            }
+          )
+        ];
+      }
+    });
+
+    cb();
+
+    fancyLog(`server http://127.0.0.1:${GULP_PORT}`);
+  }
+
 const server = series(runPHP, makeServer);
 
 export { server, runPHP, makeServer };

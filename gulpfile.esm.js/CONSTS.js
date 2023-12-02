@@ -57,6 +57,7 @@ let CONSTS = {
     SASS_SRC: 'src/sass',
     SRC: 'src',
     STATIC_DEST: `${THEME}`,
+    STATIC_DIR: './',
     TEMPLATES_DEST: `${THEME}`,
     TEMPLATES_SRC: 'src/templates',
     TEXT_SRC: 'src/text',
