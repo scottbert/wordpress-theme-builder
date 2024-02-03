@@ -21,7 +21,7 @@ try {
     OPTIONS = require(pth + '/src/options.js');
 } catch (ex) {} //eslint-disable-line
 
-let CONSTS = {
+const DEFAULT_CONSTS = {
     APPSERVER_PORT: process.env.PORT || APPSERVER_PORT,
     AUDIO_SRC: 'src/audio',
     BREAKPOINTS: {
@@ -70,8 +70,8 @@ let CONSTS = {
     WPCONFIG_SRC: 'src/wp-config.php'
 };
 
-CONSTS = {
-    ...CONSTS,
+const CONSTS = {
+    ...DEFAULT_CONSTS,
     ...OPTIONS
 };
 

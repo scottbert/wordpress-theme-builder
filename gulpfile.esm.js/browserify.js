@@ -1,6 +1,5 @@
 import { dest } from 'gulp';
 import browserify from 'browserify';
-import commonShakeify from 'common-shakeify';
 import fancyLog from 'fancy-log';
 import glob from 'glob';
 import gulpIf from 'gulp-if';
@@ -10,6 +9,8 @@ import merge2 from 'merge2';
 import vinylBuffer from 'vinyl-buffer';
 import vinylSourceStream from 'vinyl-source-stream';
 import watchify from 'watchify';
+import gulpTerser from 'gulp-terser';
+import terser from 'terser';
 
 import { notify } from './notify';
 import { CONSTS } from './CONSTS';
@@ -36,7 +37,8 @@ function addToBrowserify(entry) {
         cache: {},
         packageCache: {},
         paths: [
-            `./${JS_SRC}modules`
+            `./${JS_SRC}modules`,
+            './src/node_modules'
         ]
     };
 
@@ -47,7 +49,7 @@ function addToBrowserify(entry) {
     const name = entry.replace('$name', NAME).replace('$version', VERSION)
         .replace(/.*\/([\w$\-.]+).js/, '$1');
 
-    const b = browserify(options).plugin(commonShakeify, {});
+    const b = browserify(options);
 
     if (isDev) {
         b.transform('babelify', {
@@ -65,7 +67,7 @@ function addToBrowserify(entry) {
         b.plugin(watchify, { delay: 10 });
     } else {
         b.transform('babelify', { presets: ['@babel/preset-env', '@babel/preset-react'] });
-        b.plugin('tinyify', { flat: false });
+        b.transform('envify');
     }
 
     function doLR() {
@@ -94,6 +96,7 @@ function addToBrowserify(entry) {
             .pipe(gulpReplace('$$smalltablet$$', BREAKPOINTS.SMALL_TABLET))
             .pipe(gulpReplace('$$tablet$$', BREAKPOINTS.TABLET))
             .pipe(gulpReplace('$$smalldesktop$$', BREAKPOINTS.SMALL_DESKTOP))
+            .pipe(gulpTerser({}, terser.minify))
             .pipe(dest(JS_DEST))
             .pipe(gulpIf(doLR(), gulpLivereload({
                 port: LIVERELOAD_PORT
