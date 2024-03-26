@@ -38,7 +38,8 @@ function addToBrowserify(entry) {
         packageCache: {},
         paths: [
             `./${JS_SRC}modules`,
-            './src/node_modules'
+            './src/node_modules',
+            'node_modules'
         ]
     };
 
