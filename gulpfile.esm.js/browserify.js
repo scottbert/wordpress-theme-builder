@@ -31,6 +31,10 @@ const isDev = NODE_ENV !== 'production';
 
 const entries = glob.sync(`${JS_SRC}*.js`);
 
+/**
+ * @param {string} entry entry file string from glob.
+ * @returns {NodeJS.ReadWriteStream} stream
+ */
 function addToBrowserify(entry) {
     const options = {
         entries: [entry],
@@ -43,8 +47,14 @@ function addToBrowserify(entry) {
         ]
     };
 
-    if (isDev) {
-        options.debug = true;
+  /**
+   * Executes a logic to determine if a line return is needed.
+   *
+   * @return {boolean} Returns true if a line return is needed, false otherwise.
+   */
+  function doLR() {
+    if (process.env.OVERRIDE_LR === 'true') {
+      return false;
     }
 
     const name = entry.replace('$name', NAME).replace('$version', VERSION)
@@ -71,10 +81,33 @@ function addToBrowserify(entry) {
         b.transform('envify');
     }
 
-    function doLR() {
-        if (process.env.OVERRIDE_LR === 'true') {
-            return false;
-        }
+  function bundle() {
+    return (
+      b
+        .bundle()
+        .pipe(vinylSourceStream(name + JS_OUTPUT))
+        .pipe(vinylBuffer())
+        .pipe(gulpReplace('$$API$$', API || ''))
+        .pipe(gulpReplace('$$name$$', NAME))
+        .pipe(gulpReplace('$$version$$', VERSION))
+        .pipe(gulpReplace('$$oldMobile$$', `${BREAKPOINTS.OLD_MOBILE}`))
+        .pipe(gulpReplace('$$mobile$$', `${BREAKPOINTS.MOBILE}`))
+        .pipe(gulpReplace('$$smalltablet$$', `${BREAKPOINTS.SMALL_TABLET}`))
+        .pipe(gulpReplace('$$tablet$$', `${BREAKPOINTS.TABLET}`))
+        .pipe(gulpReplace('$$smalldesktop$$', `${BREAKPOINTS.SMALL_DESKTOP}`))
+        // @ts-ignore
+        .pipe(gulpIf(!isDev, gulpTerser({}, minify)))
+        .pipe(dest(JS_DEST))
+        .pipe(
+          gulpIf(
+            doLR(),
+            gulpLivereload({
+              port: LIVERELOAD_PORT
+            })
+          )
+        )
+    );
+  }
 
         process.env.OVERRIDE_LR = 'true';
 
