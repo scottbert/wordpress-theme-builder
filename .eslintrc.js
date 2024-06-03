@@ -1,19 +1,14 @@
 module.exports = {
   env: {
     node: true,
-    es6: true
+    es6: true,
+    browser: false
   },
-  plugins: ['jsdoc', 'import', 'prettier', 'react', 'react-hooks'],
+  plugins: ['jsdoc', 'import', 'prettier'],
 
   settings: {
     'import/resolver': {
-      alias: {
-        map: [['~', './js/modules']]
-      },
       node: true
-    },
-    react: {
-      version: 'detect'
     }
   },
   extends: [
@@ -81,6 +76,7 @@ module.exports = {
     'no-unused-vars': [
       2,
       {
+        vars: 'all',
         args: 'none'
       }
     ],
