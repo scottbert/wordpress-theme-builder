@@ -7,6 +7,10 @@ import { notify } from './notify';
 import { CONSTS } from './CONSTS';
 const { GULPFILE, JS_SRC } = CONSTS;
 
+/**
+ * Lints the specified JavaScript files using ESLint.
+ * @returns {NodeJS.ReadWriteStream} The stream of linted files.
+ */
 function eslint() {
   return src([`./${GULPFILE}/**/*.js`, `./${JS_SRC}/**/*.js`])
     .pipe(gulpPlumber({ errorHandler: notify('ESLint Error') }))

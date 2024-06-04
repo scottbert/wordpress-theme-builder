@@ -1,2 +1,7 @@
 app/**
 deploy/**
+src/**
+build/**
+dist/**
+.run/**
+.vscode/**

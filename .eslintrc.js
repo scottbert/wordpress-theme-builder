@@ -1,6 +1,7 @@
 module.exports = {
   env: {
     node: true,
+    mocha: true,
     es6: true,
     browser: false
   },
@@ -16,11 +17,12 @@ module.exports = {
     'plugin:import/errors',
     'plugin:import/warnings',
     'plugin:import/recommended',
-    'plugin:prettier/recommended'
+    'plugin:prettier/recommended',
+    'plugin:jsdoc/recommended'
   ],
   parserOptions: {
     sourceType: 'module',
-    ecmaVersion: 'latest'
+    ecmaVersion: '2020'
   },
   rules: {
     'array-bracket-spacing': 1,
@@ -110,6 +112,12 @@ module.exports = {
     strict: [2, 'global'],
     'valid-jsdoc': 2,
     'vars-on-top': 1,
-    'import/no-unresolved': [2]
+    'import/no-unresolved': [2],
+    'jsdoc/no-undefined-types': [
+      1,
+      {
+        definedTypes: ['NodeJS']
+      }
+    ]
   }
 };

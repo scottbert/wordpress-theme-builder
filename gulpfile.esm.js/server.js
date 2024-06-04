@@ -7,77 +7,85 @@ import gulpConnect from 'gulp-connect';
 import gulpConnectPHP from 'gulp-connect-php';
 import httpRewriteMiddleware from 'http-rewrite-middleware';
 import serveStatic from 'serve-static';
-import url from 'url';
 
 import { CONSTS } from './CONSTS';
 
 const { APPSERVER_PORT, RUN_DEST, GULP_PORT, LIVERELOAD_PORT } = CONSTS;
 
 const urlrewrites = [
-    {
-        from: '^/(wp-admin|wp-includes|wp-content)/((?!.*php).*)',
-        to: '/$2'
-    }
+  {
+    from: '^/(wp-admin|wp-includes|wp-content)/((?!.*php).*)',
+    to: '/$2'
+  }
 ];
 
 const staticOptions = {
-    etag: false,
-    index: false
+  etag: false,
+  index: false
 };
 
+/**
+ * @param {Function} cb callback
+ * @returns {void} nothing
+ */
 function runPHP(cb) {
-    gulpConnectPHP.server({
-        port: APPSERVER_PORT,
-        hostname: '0.0.0.0',
-        base: RUN_DEST,
-        debug: false,
-        configCallback: function _configCallback(type, collection) {
-            if (type === gulpConnectPHP.OPTIONS_SPAWN_OBJ) {
-                collection.env = Object.assign(
-                    {
-                        APPLICATION_ENV: 'development'
-                    },
-                    process.env
-                );
-                cb();
+  gulpConnectPHP.server({
+    port: APPSERVER_PORT,
+    hostname: '0.0.0.0',
+    base: RUN_DEST,
+    debug: false,
+    configCallback: function configCallback(type, collection) {
+      if (type === gulpConnectPHP.OPTIONS_SPAWN_OBJ) {
+        collection.env = Object.assign(
+          {
+            APPLICATION_ENV: 'development'
+          },
+          process.env
+        );
+        cb();
 
-                return collection;
-            }
+        return collection;
+      }
 
-            cb();
+      cb();
 
-            return collection;
-        }
-    });
+      return collection;
+    }
+  });
 }
 
+/**
+ * @param {Function} cb callback
+ * @returns {void} nothing
+ */
 function makeServer(cb) {
-    const gulpPort = GULP_PORT;
+  const gulpPort = GULP_PORT;
 
-    gulpConnect.server({
-        root: '.run',
-        port: gulpPort,
-        host: '0.0.0.0',
-        debug: true,
-        middleware: () => {
-            return [
-                connectLivereload({
-                    port: LIVERELOAD_PORT
-                }),
-                httpRewriteMiddleware.getMiddleware(urlrewrites),
-                serveStatic('.run/wp-admin/', staticOptions),
-                serveStatic('.run/wp-content/', staticOptions),
-                serveStatic('.run/wp-includes/', staticOptions),
-                createProxyMiddleware('/', {
-                    target: url.parse(`http://127.0.0.1:${APPSERVER_PORT}`)
-                }),
-                connectCORS()
-            ];
-        }
-    });
-    cb();
+  gulpConnect.server({
+    silent: true,
+    root: '.run',
+    port: gulpPort,
+    host: '0.0.0.0',
+    debug: true,
+    middleware: () => {
+      return [
+        connectLivereload({
+          port: LIVERELOAD_PORT
+        }),
+        httpRewriteMiddleware.getMiddleware(urlrewrites),
+        serveStatic('.run/wp-admin/', staticOptions),
+        serveStatic('.run/wp-content/', staticOptions),
+        serveStatic('.run/wp-includes/', staticOptions),
+        createProxyMiddleware({
+          target: `http://127.0.0.1:${APPSERVER_PORT}`
+        }),
+        connectCORS()
+      ];
+    }
+  });
+  cb();
 
-    fancyLog(`server http://127.0.0.1:${gulpPort}`);
+  fancyLog(`server http://127.0.0.1:${gulpPort}`);
 }
 
 const server = series(runPHP, makeServer);

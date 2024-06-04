@@ -1,0 +1,12 @@
+declare module 'connect-cors';
+declare module 'gulp-changed-in-place';
+declare module 'gulp-download';
+declare module 'gulp-eslint';
+declare module 'gulp-livereload';
+declare module 'gulp-spawn-mocha';
+declare module 'gulp-unzip';
+declare module 'gulp-wait';
+declare module 'http-rewrite-middleware';
+declare module 'postcss-assets';
+declare module 'postcss-combine-media-query';
+declare module 'postcss-sort-media-queries';

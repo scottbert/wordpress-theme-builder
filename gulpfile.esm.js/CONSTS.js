@@ -1,5 +1,5 @@
 const LIVERELOAD = 35679;
-const RANDOM_PORT = LIVERELOAD + parseInt(Math.random() * 100); // Randomize port for livereload.
+const RANDOM_PORT = (LIVERELOAD + Math.random() * 100).toFixed(0); // Randomize port for livereload.
 const APPSERVER_PORT = 8888;
 const SERVER_PORT = 9000;
 
@@ -8,17 +8,20 @@ const THEME = `${CONTENT}themes/wp-theme/`;
 
 const { name, version } = require('../package.json');
 
-let OPTIONS = {};
+let OPTIONS = {
+  NAME: name,
+  VERSION: version
+};
 
 if (!process.env.LIVERELOAD_PORT) {
-    process.env.LIVERELOAD_PORT = RANDOM_PORT;
+  process.env.LIVERELOAD_PORT = RANDOM_PORT;
 }
 
 try {
-    const fs = require('fs');
-    const pth = fs.realpathSync('.');
+  const fs = require('fs');
+  const pth = fs.realpathSync('.');
 
-    OPTIONS = require(pth + '/src/options.js');
+  OPTIONS = require(pth + '/src/options.js');
 } catch (ex) {} //eslint-disable-line
 
 const DEFAULT_CONSTS = {
@@ -52,7 +55,7 @@ const DEFAULT_CONSTS = {
   JSON_SRC: 'src/json/',
   LANGUAGES_SRC: 'src/languages',
   LIVERELOAD_PORT: parseInt(process.env.LIVERELOAD_PORT),
-  NAME: OPTIONS.NAME || name,
+  NAME: OPTIONS.NAME,
   NODE_ENV: process.env.NODE_ENV,
   RUN_DEST: '.run/',
   SASS_SRC: 'src/sass',
@@ -64,7 +67,7 @@ const DEFAULT_CONSTS = {
   TEXT_SRC: 'src/text',
   THEME,
   UPLOAD_SRC: 'src/upload',
-  VERSION: OPTIONS.VERSION || version,
+  VERSION: OPTIONS.VERSION,
   VIDEO_SRC: 'src/video',
   WP_SRC: '.contrib/wordpress',
   WP_CSS_SRC: 'src/css/style.css',
@@ -72,8 +75,8 @@ const DEFAULT_CONSTS = {
 };
 
 const CONSTS = {
-    ...DEFAULT_CONSTS,
-    ...OPTIONS
+  ...DEFAULT_CONSTS,
+  ...OPTIONS
 };
 
 export { CONSTS };

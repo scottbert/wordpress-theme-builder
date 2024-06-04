@@ -20,14 +20,14 @@ const deploy = series(build, copyDeploy, parallel(gzip, brotli), zip);
 const defaultTask = series(build, watch, server);
 
 export {
-    browserify,
-    build,
-    copyviews,
-    defaultTask as default,
-    deploy,
-    eslint,
-    getwp,
-    sass,
-    server,
-    runPHP
+  browserify,
+  build,
+  copyviews,
+  defaultTask as default,
+  deploy,
+  eslint,
+  getwp,
+  sass,
+  server,
+  runPHP
 };
